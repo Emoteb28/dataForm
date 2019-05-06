@@ -15,6 +15,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret, faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+/*--*/
+import VueEvents from 'vue-events'
+
+Vue.use(VueEvents);
 library.add(faUserSecret, faCoffee);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
