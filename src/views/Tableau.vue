@@ -29,7 +29,7 @@
 	}
 </script>
 
-<style>
+<style scoped lang="scss">
 	#app {
 		font-family: 'Tahoma', Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;

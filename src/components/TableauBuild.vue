@@ -166,7 +166,7 @@
 	}
 </script>
 
- <style lang="css">
+ <style scoped lang="scss">
 	 #app {
 		 font-family: 'Avenir', Helvetica, Arial, sans-serif;
 		 color: #2c3e50;
