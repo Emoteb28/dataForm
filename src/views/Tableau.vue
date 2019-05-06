@@ -1,9 +1,11 @@
 <template>
 	<b-container id="app" fluid>
+<!--
 		<font-awesome-icon icon="user-secret" />
 		<font-awesome-icon icon="coffee"></font-awesome-icon>
 		<br>
 		<font-awesome-icon :icon="myIcon" />
+-->
 
 
 		<TableauBuild></TableauBuild>

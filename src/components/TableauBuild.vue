@@ -1,18 +1,14 @@
  <template>
 <div>
-
-
-
-	<filter-bar></filter-bar>
 	<vuetable ref="vuetable"
-	          api-url="https://vuetable.ratiw.net/api/users"
+	          :api-url="apiUrl"
 	          :fields="fields"
 	          pagination-path=""
-	          :per-page="20"
+	          :per-page="10"
 	          :multi-sort="true"
 	          :sort-order="sortOrder"
-	          :append-params="moreParams"
-	          detail-row-component="my-detail-row"
+	          :append-params="appendParams"
+	          detail-row-component="detailRowComponent"
 	          @vuetable:cell-clicked="onCellClicked"
 	          @vuetable:pagination-data="onPaginationData"
 	 >
@@ -43,7 +39,6 @@
 	 ></vuetable-pagination>
 	</div>
 
-
 	<!--<div class="overflow-auto">
 		<b-pagination
 				v-model="currentPage"
@@ -62,7 +57,6 @@
 				small
 		></b-table>
 	</div>-->
-
 </div>
  </template>
 
@@ -91,21 +85,33 @@
 			VuetablePagination,
 			VuetablePaginationInfo,
 		},
+	props: {
+		apiUrl: {
+			type: String,
+				required: true
+		},
+		fields: {
+			type: Array,
+				required: true
+		},
+		sortOrder: {
+			type: Array,
+		default() {
+				return []
+			}
+		},
+		appendParams: {
+			type: Object,
+		default() {
+				return {}
+			}
+		},
+		detailRowComponent: {
+			type: String
+		}
+	},
 		data() {
-			return {
-				css: {
-					ascendingIcon: 'glyphicon glyphicon-chevron-up',
-					descendingIcon: 'glyphicon glyphicon-chevron-down'
-				},
-				fields :  FieldDefs,
-				sortOrder: [
-					{
-						field: 'email',
-						sortField: 'email',
-						direction: 'asc'
-					}
-				],
-			};
+			return {};
 		},
 		mounted() {
 			this.$events.$on('filter-set', eventData => this.onFilterSet(eventData))
@@ -145,23 +151,15 @@
 				this.$refs.vuetable.toggleDetailRow(data.id)
 			},
 			onFilterSet (filterText) {
-				this.moreParams = {
-					'filter': filterText
-				}
-				vm = this
-				Vue.nextTick( function() {
-					vm.$refs.vuetable.refresh()
-				})
-				// Vue.nextTick( () => this.$refs.vuetable.refresh())
+				this.appendParams.filter = filterText
+				Vue.nextTick( () => this.$refs.vuetable.refresh() )
 			},
 			onFilterReset () {
-				this.moreParams = {}
-				vm = this
-				Vue.nextTick( function() {
-					vm.$refs.vuetable.refresh()
-				})
-				// Vue.nextTick( () => this.$refs.vuetable.refresh())
+				delete this.appendParams.filter
+				Vue.nextTick( () => this.$refs.vuetable.refresh() )
 			}
+				// Vue.nextTick( () => this.$refs.vuetable.refresh())
+
 		}
 	}
 </script>

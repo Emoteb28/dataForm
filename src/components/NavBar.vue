@@ -2,7 +2,7 @@
     <!--Nav-->
     <b-navbar-nav >
         <b-navbar type="dark" variant="info">
-            <b-navbar-brand >Home</b-navbar-brand>
+            <b-navbar-brand>Syllabs</b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
