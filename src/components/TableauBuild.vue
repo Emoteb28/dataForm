@@ -1,11 +1,41 @@
  <template>
 <div>
-	 <vuetable ref="vuetable"
-	           api-url="https://vuetable.ratiw.net/api/users"
-	           :fields="fields"
-	           pagination-path=""
-	           @vuetable:pagination-data="onPaginationData"
-	 ></vuetable>
+	<div>
+	<vuetable-pagination-info ref="paginationInfoTop"
+	></vuetable-pagination-info>
+	<vuetable-pagination ref="paginationTop"
+	                     @vuetable-pagination:change-page="onChangePage"
+	></vuetable-pagination>
+	</div>
+
+	<vuetable ref="vuetable"
+	          api-url="https://vuetable.ratiw.net/api/users"
+	          :fields="fields"
+	          pagination-path=""
+	          :per-page="20"
+	          :multi-sort="true"
+	          :sort-order="sortOrder"
+	          @vuetable:pagination-data="onPaginationData"
+	          detail-row-component="my-detail-row"
+	          @vuetable:cell-clicked="onCellClicked"
+	 >
+		<template slot="actions" scope="props">
+			<div class="custom-actions">
+				<button class="ui basic button"
+				        @click="onAction('view-item', props.rowData, props.rowIndex)">
+					<i class="zoom icon"></i>
+				</button>
+				<button class="ui basic button"
+				        @click="onAction('edit-item', props.rowData, props.rowIndex)">
+					<i class="edit icon"></i>
+				</button>
+				<button class="ui basic button"
+				        @click="onAction('delete-item', props.rowData, props.rowIndex)">
+					<i class="delete icon"></i>
+				</button>
+			</div>
+		</template>
+	</vuetable>
 
 	<div class="overflow-auto">
 		<vuetable-pagination-info ref="paginationInfo"
@@ -40,13 +70,17 @@
  </template>
 
 <script>
-	import Vuetable from 'vuetable-2/src/components/Vuetable'
 	import accounting from 'accounting'
 	import moment from 'moment'
-	// import VuetablePagination from 'vuetable-2/src/components/VuetablePaginationDropdown'
-	import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
+	import Vue from 'vue'
+	import Vuetable from 'vuetable-2/src/components/Vuetable'
 	import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
-
+	import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
+	import CustomActions from './CustomActions'
+	import DetailRow from './DetailRow'
+	import FieldDefs from './FieldDefs.js'
+	Vue.component('custom-actions', CustomActions);
+	Vue.component('my-detail-row', DetailRow);
 
 	export default {
 		name: "TableauBuild",
@@ -57,51 +91,18 @@
 		},
 		data() {
 			return {
-				fields : [
+				css: {
+					ascendingIcon: 'glyphicon glyphicon-chevron-up',
+					descendingIcon: 'glyphicon glyphicon-chevron-down'
+				},
+				fields :  FieldDefs,
+				sortOrder: [
 					{
-						name : 'name',
-						'title' : 'Nom'
-					},
-					{
-						name: 'nickname',
-						'title' : 'Surnom',
-						'callback': 'allcap'
-					},
-					{
-						'name': 'email',
-						'title' : 'Email'
-					},
-					{
-						'name' : 'birthdate',
-						'title' : 'Anniversaire',
-						'dataClass': 'text-left',
-						'callback': 'formatDate|DD-MM-YYYY'
-					},
-					{
-						'name' : 'address.line1',
-						'title' : 'Adresse 1'
-					},
-					{
-						'name' : 'address.line2',
-						'title' : 'Adresse 2'
-					},
-					{
-						'name' : 'address.zipcode',
-						'title' : 'Code Postal'
-					},
-					{
-						name: 'salary',
-						'titleClass': 'text-left',
-						'dataClass': 'text-left',
-						'callback': 'formatNumber'
-					},
-					{
-						name: 'gender',
-						'titleClass': 'text-left',
-						'dataClass': 'text-left',
-						'callback': 'genderLabel'
-					},
-				]
+						field: 'email',
+						sortField: 'email',
+						direction: 'asc'
+					}
+				],
 			};
 		},
 		methods: {
@@ -122,14 +123,118 @@
 					: moment(value, 'YYYY-MM-DD').format(fmt)
 			},
 			onPaginationData (paginationData) {
+				this.$refs.paginationTop.setPaginationData(paginationData);
+				this.$refs.paginationInfoTop.setPaginationData(paginationData);
 				this.$refs.pagination.setPaginationData(paginationData);
-				this.$refs.paginationInfo.setPaginationData(paginationData)   // <----
+				this.$refs.paginationInfo.setPaginationData(paginationData);
 			},
 			onChangePage (page) {
 				this.$refs.vuetable.changePage(page)
+			},
+			onAction (action, data, index) {
+				console.log('slot action: ' + action, data.name, index)
+			},
+			onCellClicked (data, field, event) {
+				console.log('cellClicked: ', field.name)
+				this.$refs.vuetable.toggleDetailRow(data.id)
 			}
 		}
 	}
 </script>
 
+ <style lang="css">
+	 #app {
+		 font-family: 'Avenir', Helvetica, Arial, sans-serif;
+		 color: #2c3e50;
+	 }
 
+	 * {
+		 -webkit-box-sizing: border-box;
+		 -moz-box-sizing: border-box;
+		 box-sizing: border-box;
+		 margin: 0;
+		 padding: 0;
+	 }
+
+
+	 * > input:-webkit-autofill {
+		 -webkit-box-shadow: 0 0 0px 1000px #fff inset !important; /*关于解决输入框背景颜色*/
+		 -webkit-text-fill-color: #000000!important;
+	 }
+	 html,
+	 body {
+		 font-family: "Microsoft YaHei";
+		 font-size: 14px;
+		 color: rgba(0, 0, 0, 0.85);
+		 background: #fff;
+		 padding: 0 10px;
+		 overflow-x: hidden;
+		 -webkit-font-smoothing: antialiased;
+	 }
+
+	 ol,
+	 ul,
+	 li {
+		 list-style: none;
+	 }
+
+	 img {
+		 border: 0 none;
+	 }
+
+	 a {
+		 text-decoration: none;
+	 }
+
+	 a,
+	 input,
+	 textarea {
+		 outline: none;
+	 }
+
+	 input::-ms-clear,
+	 input::-ms-reveal {
+		 display: none;
+	 }
+
+	 table {
+		 border-collapse: collapse;
+		 border-spacing: 0;
+	 }
+
+	 caption,
+	 th,
+	 td {
+		 text-align: left;
+		 font-weight: normal;
+		 vertical-align: middle;
+	 }
+
+	 .clearfix {
+		 *zoom: 1;
+	 }
+
+	 .clearfix:after {
+		 clear: both;
+		 content: '';
+		 display: block;
+		 height: 0;
+		 visibility: hidden;
+	 }
+
+	 .hide {
+		 display: none !important;
+	 }
+
+	 .show {
+		 display: block;
+	 }
+
+	 .fl {
+		 float: left;
+	 }
+
+	 .fr {
+		 float: right
+	 }
+ </style>

@@ -19,7 +19,10 @@ library.add(faUserSecret, faCoffee);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-/*--*/
+/*-vue-table-pagination-*/
+import VueTablePagination from 'vue-table-pagination';
+Vue.use(VueTablePagination);
+
 Vue.config.productionTip = false;
 
 new Vue({
