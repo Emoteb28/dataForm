@@ -14,7 +14,7 @@
 			<span>{{rowData.nickname}}</span>
 		</div>
 		<div class="inline field">
-			<label>Birthdate: </label>
+			<label><strong>Birthdate: </strong></label>
 			<span>{{rowData.birthdate}}</span>
 		</div>
 		<div class="inline field">

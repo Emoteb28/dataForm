@@ -11,6 +11,8 @@
               :sort-order="sortOrder"
               :append-params="moreParams"
               detail-row-component="my-detail-row"
+              @vuetable:cell-clicked="onCellClicked"
+              @vuetable:pagination-data="onPaginationData"
       ></TableauBuild>
   </div>
 </template>
@@ -39,6 +41,9 @@
                 ],
                 moreParams: {}
             }
+        },
+        methods : {
+
         }
     }
 </script>

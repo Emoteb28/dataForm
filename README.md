@@ -37,4 +37,4 @@ $
 
 npm install moment
 npm install daterangepicker
-We will see ?
+https://github.com/ratiw/vuetable-2-tutorial/wiki/lesson-15
