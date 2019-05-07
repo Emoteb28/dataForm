@@ -11,6 +11,9 @@
                     <b-nav-item router-link to="/">Home</b-nav-item>
                     <b-nav-item router-link to="/about">About</b-nav-item>
                     <b-nav-item router-link to="/tableau">Tableau</b-nav-item>
+                    <b-nav-item router-link to="/myaddresses">MyAddresses</b-nav-item>
+                    <b-nav-item router-link to="/liste">Liste</b-nav-item>
+                    <b-nav-item router-link to="/glisser">Glisser</b-nav-item>
                 </b-navbar-nav>
 
                 <!-- Right aligned nav items -->

@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Tableau from './views/Tableau.vue'
+import MyAddresses from './components/MyAddresses.vue'
+import Liste from './components/Liste.vue'
+import Glisser from './components/Glisser.vue'
 
 
 
@@ -26,6 +29,21 @@ export default new Router({
       path: '/tableau',
       name: 'Tableau',
       component: Tableau
+    },
+    {
+      path: '/myaddresses',
+      name: 'MyAddresses',
+      component: MyAddresses
+    },
+    {
+      path: '/liste',
+      name: 'Liste',
+      component: Liste
+    },
+    {
+      path: '/glisser',
+      name: 'Glisser',
+      component: Glisser
     },
   ]
 })
