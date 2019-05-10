@@ -68,9 +68,9 @@
 
 
 								<b-table
-										responsive="true"
-										hover="true"
-										show-empty=" true"
+										responsive
+										hover
+										show-empty
 										stacked="md"
 										:empty-text="nothing"
 										:items="items"
@@ -88,7 +88,6 @@
 
 
 										selectable
-										:v-if="status"
 										:select-mode="selectMode"
 										selectedVariant="success"
 										@row-selected="rowSelected"
@@ -134,6 +133,8 @@
 														</div>
 											<!--</draggable>-->
 												</b-col>
+
+												<!--Resumé Json-->
 												<b-col cols="6">
 													<rawDisplayer   :value="row.item" title="Resumé du template :" />
 													<b-button size="sm" @click="row.toggleDetails">Fermer Details</b-button>
@@ -167,9 +168,10 @@
 
 									<!-- Action -->
 									<template slot="clear" slot-scope="row">
-										<b-button size="sm" @click="row.toggleDetails">
-											{{ row.detailsShowing ? 'Masquer' : 'Afficher' }} Effacer
+										<b-button variant="primary">
+											Effacer <b-badge variant="light" class=" text-danger">X</b-badge>
 										</b-button>
+
 									</template>
 
 								</b-table>
@@ -231,6 +233,7 @@
 					// Transition name
 					name: 'flip-list'
 				},
+
 				modes: ['multi', 'single', 'range'],
 				status: 'true',
 				text: '',
@@ -255,7 +258,7 @@
 					{ id: 10, isActive: true, age: 38, nam: 'John', last: 'Carney'},
 					{ id: 11, isActive: false, age: 29, nam: 'Dick', last: 'Dunlap'}
 				],
-				selectMode: 'multi',
+				selectMode: 'single',
 				selected: [],
 				fields: [
 					// A virtual column that doesn't exist in items
@@ -326,8 +329,8 @@
 
 			},
 			add: function() {
-				console.log('bien joué');
-				// this.items.push( { id: 12, isActive: false, age: 29, nam: 'Isaac', last: 'ETK' }
+				//console.log('bien joué');
+				this.items.push({id: id++ , isActive: false, age: 29, nam: 'Massaran', last: 'Bamba'});
 				/*
 				{ name: "Juan " + id, id: id++ },
 				);*/
