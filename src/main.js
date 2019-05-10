@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import rawDisplayer from "./components/raw-displayer.vue";
 
 /*-Bootstrap-*/
  import BootstrapVue from 'bootstrap-vue'
@@ -22,6 +23,7 @@ Vue.use(VueEvents);
 library.add(faUserSecret, faCoffee);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component("rawDisplayer", rawDisplayer);
 
 /*-vue-table-pagination-*/
 import VueTablePagination from 'vue-table-pagination';
