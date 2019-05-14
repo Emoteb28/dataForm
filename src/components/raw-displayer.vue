@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div   >
     <p>{{ title }}</p>
-    <pre>{{ valueString }}</pre>
+    <pre  class="text-center">{{ valueString }}</pre>
   </div>
 </template>
 <script>

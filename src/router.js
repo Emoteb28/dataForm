@@ -7,6 +7,7 @@ import MyAddresses from './components/MyAddresses.vue'
 import Liste from './components/Liste.vue'
 import Glisser from './components/Glisser.vue'
 import Sweeny from './components/Sweeny.vue'
+import Vfor from './components/Vfor.vue'
 
 
 
@@ -50,6 +51,11 @@ export default new Router({
       path:'/sweeny',
       name: 'Sweeny',
       component: Sweeny
+    },
+    {
+      path:'/vfor',
+      name: 'Vfor',
+      component: Vfor
     },
   ]
 })

@@ -60,3 +60,14 @@ https://stackoverflow.com/questions/55370000/how-to-convert-curl-to-axios-reques
 Ok avec VueJs
 https://stackoverflow.com/questions/47630163/axios-post-request-to-send-form-data
 https://www.quora.com/How-do-you-Send-formData-through-Axios-in-Vue-JS-and-Node-JS
+
+
+
+#Editer les donnees recues
+https://codesandbox.io/s/61y919wrk3?from-embed
+https://rangle.io/blog/how-to-create-data-driven-user-interfaces-in-vue/
+
+
+#Lire un fichier
+https://codesandbox.io/s/4p0k1xly4
+https://alligator.io/vuejs/file-reader-component/

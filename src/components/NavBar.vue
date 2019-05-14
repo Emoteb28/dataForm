@@ -15,6 +15,7 @@
                     <b-nav-item router-link to="/liste">Liste</b-nav-item>
                     <b-nav-item router-link to="/glisser">Glisser</b-nav-item>
                     <b-nav-item router-link :to="{ name: 'Sweeny' }">Sweeny</b-nav-item>
+                    <b-nav-item router-link :to="{ name: 'Vfor' }">Vfor</b-nav-item>
 
                 </b-navbar-nav>
 

@@ -104,7 +104,7 @@
 									</template>
 
 									<!-- Active -->
-									<template slot="isActive" slot-scope="row">
+									<template slot="Texte" slot-scope="row">
 										{{ row.value ? 'Oui (-_-)' : 'Nom :( )' }}
 									</template>
 
@@ -117,26 +117,62 @@
 									<!-- Action_details -->
 									<template slot="row-details" slot-scope="row">
 										<b-card>
-											<div class="text-center my-3">
-												<b-button v-b-tooltip.hover title="Tooltip content"  @click="add">Ajouter une
+										<div class="text-center my-3">
+											<!--<b-button v-b-tooltip.hover title="Tooltip content"  @click="add">Ajouter une
+											option</b-button>-->
+
+												<b-button v-b-tooltip.hover title="Tooltip content"  @click="addProperty">Ajouter une
 													option</b-button>
 											</div>
 
 											<b-row align-h="between">
-												<b-col cols="6">
+												<b-col cols="6"  class="text-center">
+													<b-container class="bv-example-row"  v-for="(value, key) in row.item" :key="key">
+														<label><b>{{key}}</b> : {{value}} </label>
 
-														<div
-																class="list-group-item"
-																v-for="(value, key) in row.item" :key="key"
+														<input
+																v-bind="$attrs"
+																v-bind:value="value"
+																v-on="inputListeners"
 														>
-															{{ key }}: {{ value }}
-														</div>
+
+														<!-- <b-row>
+															<b-col cols="3"
+															       class="text-right"><b>{{ key }}: </b></b-col>
+															<b-col   cols="4" class="text-left">{{ value }}</b-col>
+															<b-col  cols="5" class="text-left">
+																<b-form-input  type="text" v-model="$event.target.value"
+																                ></b-form-input>
+
+
+
+															</b-col>
+														</b-row>-->
+										<!--			<b-row class="list-group-item justify-content-md-center"
+													       v-for="(value, key) in row.item" :key="key">
+														<b-col col lg="2"><b>{{ key }}: </b></b-col>
+														<b-col col lg="2">{{ value }}</b-col>
+														<b-col cols="12" md="auto"><b-form-input ></b-form-input></b-col>
+
+
+
+
+													</b-row>-->
+
+													</b-container>
+													<b-row >
+														<b-col  class="text-center">
+															<b-button size="sm" @click="rowValidate(item)">Valider
+															</b-button>
+														</b-col>
+
+													</b-row>
 											<!--</draggable>-->
 												</b-col>
 
 												<!--Resumé Json-->
-												<b-col cols="6">
-													<rawDisplayer   :value="row.item" title="Resumé du template :" />
+												<b-col cols="6"   class="text-center">
+													<rawDisplayer   :value="row.item" title="Resumé du template :"  class="text-center" />
 													<b-button size="sm" @click="row.toggleDetails">Fermer Details</b-button>
 												</b-col>
 
@@ -227,6 +263,8 @@
 			draggable,
 		},
 		name: "Sweeny",
+		props: ['placeholder', 'label', 'name', 'value'],
+
 		data() {
 			return {
 				transProps: {
@@ -240,23 +278,26 @@
 				nothing: 'There are no records to show',
 				enabled: true,
 				items: [
-					{ id: 0, isActive: true, age: 40, nam:  ' ', last: 'Macdonald'},
-					{ id: 1, isActive: false, age: 21, nam: 'Larsen', last: 'Shaw'},
+					{ id: 0, Texte: true, age: 40, nam:  ' ', last: 'Macdonald'},
+					{ id: 1, Texte: false, age: 21, name: 'Larsen', last: 'Shaw'},
 					{
 						id: 2,
-						isActive: false,
+						Texte: false,
 						age: 9,
-						nam: 'Mini', last: 'Navarro'
+						state: {
+							name: 'Mini',
+						  last: 'Navarro'
 					},
-					{ id: 3, isActive: false, age: 89, nam: 'Geneva', last: 'Wilson'},
-					{ id: 4, isActive: true, age: 38, nam: 'Jami', last: 'Carney'},
-					{ id: 5, isActive: false, age: 27, nam: 'Essie', last: 'Dunlap'},
-					{ id: 6, isActive: true, age: 40, nam: 'Thor', last: 'Macdonald'},
-					{ id: 7, isActive: true, age: 87, nam: 'Larsen', last: 'Shaw'  },
-					{ id: 8, isActive: false, age: 26, nam: 'Mitzi', last: 'Navarro'},
-					{ id: 9, isActive: false, age: 22, nam: 'Genevieve', last: 'Wilson'},
-					{ id: 10, isActive: true, age: 38, nam: 'John', last: 'Carney'},
-					{ id: 11, isActive: false, age: 29, nam: 'Dick', last: 'Dunlap'}
+					},
+					{ id: 3, Texte: false, age: 89, nam: 'Geneva', last: 'Wilson'},
+					{ id: 4, Texte: true, age: 38, nam: 'Jami', last: 'Carney'},
+					{ id: 5, Texte: false, age: 27, nam: 'Essie', last: 'Dunlap'},
+					{ id: 6, Texte: true, age: 40, nam: 'Thor', last: 'Macdonald'},
+					{ id: 7, Texte: true, age: 87, nam: 'Larsen', last: 'Shaw'  },
+					{ id: 8, Texte: false, age: 26, nam: 'Mitzi', last: 'Navarro'},
+					{ id: 9, Texte: false, age: 22, nam: 'Genevieve', last: 'Wilson'},
+					{ id: 10, Texte: true, age: 38, nam: 'John', last: 'Carney'},
+					{ id: 11, Texte: false, age: 29, nam: 'Dick', last: 'Dunlap'}
 				],
 				selectMode: 'single',
 				selected: [],
@@ -266,7 +307,7 @@
 					{ key: 'nam', label: 'Nom du template', sortable: true, sortDirection: 'desc' },
 					{ key: 'last', label: 'Prenom', sortable: true, sortDirection: 'desc' },
 					{ key: 'age', label: 'Nombre de paragraphe', sortable: true, class: 'text-center' },
-					{ key: 'isActive', label: 'Activer' },
+					{ key: 'Texte', label: 'Activer' },
 					{ key: 'actions', label: 'Actions' },
 					{ key: 'clear', label: 'Effacer' },
 
@@ -302,13 +343,51 @@
 			},
 			draggingInfo() {
 				return this.dragging ? "under drag" : "";
-			}
-		},
+			},
+				inputListeners: function () {
+					var vm = this
+					// `Object.assign` merges objects together to form a new object
+					return Object.assign({},
+						// We add all the listeners from the parent
+						this.$listeners,
+						// Then we can add custom listeners or override the
+						// behavior of some listeners.
+						{
+							// This ensures that the component works with v-model
+							input: function (event) {
+								vm.$emit('input', event.target.value)
+							}
+						}
+					)
+				}
+			},
 		mounted() {
 			// Set the initial number of items
 			this.totalRows = this.items.length
 		},
 		methods: {
+			rowValidate(element){
+					this.items.forEach((e, i) => {
+						if (e.id === element.id) {
+							this.items[i].last = e.last+52;
+						}
+					});
+				},
+			changeStatus: function() {
+				console.log("changeStatus...")
+				bus.$emit('input', $event.target.value)
+				/*bus.$emit('changeBoxStatus', {
+					'idx': this._boxIndex,
+					'status': !this._boxStatus
+				})*/
+			},
+			addProperty (){
+					// this.$set(this.item[0], 2, 'strawberry');
+				this.$set(this.items, 'b', 2)
+
+				// Vue.set(this.items[i], 'Texte', item.title);
+
+			},
 			info(item, index, button) {
 				this.infoModal.title = `Row index: ${index}`
 				this.infoModal.content = JSON.stringify(item, null, 2)
@@ -316,21 +395,21 @@
 			},
 			tempDetail(item, index, button){
 				this.tempDet.content = JSON.stringify(item, null, 2),
-					this.$root.$emit('bv::show::modals', this.tempDet.id, button)
+					this.$root.$emit('bv::show::modals', this.tempDet.id, button);
 			},
 			resetInfoModal() {
-				this.infoModal.title = ''
+				this.infoModal.title = '';
 				this.infoModal.content = ''
 			},
 			onFiltered(filteredItems) {
 				// Trigger pagination to update the number of buttons/pages due to filtering
-				this.totalRows = filteredItems.length
+				this.totalRows = filteredItems.length;
 				this.currentPage = 1
 
 			},
 			add: function() {
 				//console.log('bien joué');
-				this.items.push({id: id++ , isActive: false, age: 29, nam: 'Massaran', last: 'Bamba'});
+				this.items.push({id: id++ , Texte: false, age: 29, nam: 'Massaran', last: 'Bamba'});
 				/*
 				{ name: "Juan " + id, id: id++ },
 				);*/
