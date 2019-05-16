@@ -8,6 +8,7 @@ import Liste from './components/Liste.vue'
 import Glisser from './components/Glisser.vue'
 import Sweeny from './components/Sweeny.vue'
 import Vfor from './components/Vfor.vue'
+import API from './components/API.vue'
 
 
 
@@ -56,6 +57,11 @@ export default new Router({
       path:'/vfor',
       name: 'Vfor',
       component: Vfor
+    },
+    {
+      path:'/api',
+      name: 'API',
+      component: API
     },
   ]
 })

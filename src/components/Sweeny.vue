@@ -45,6 +45,8 @@
 								</b-form-group>
 							</b-col>
 						</b-row>
+
+
 						<b-row  align-h="center">
 							<b-col cols="12" md="11" >
 
@@ -255,6 +257,7 @@
 
 <script>
 	import draggable from 'vuedraggable'
+
 	let id = 1;
 	export default {
 		order: 0,
@@ -417,8 +420,8 @@
 			rowSelected(items) {
 				this.selected = items
 			}
-		}
-	}
+		},
+ 	}
 </script>
 
 <style scoped>

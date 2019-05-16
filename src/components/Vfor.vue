@@ -3,6 +3,26 @@
 		<b-row align-h="center">
 			<b-col  cols="12" md="8"  >
 
+	<!---->
+				<h2>Go</h2>
+				<ul v-if="posts && posts.length">
+					<li v-for="post of posts">
+						<table border="1">
+						<tr align="left">
+							<td width="20%">{{post.title}}</td>
+							<td  width="80%">{{post.body}}</td>
+						</tr>
+						</table>
+					</li>
+				</ul>
+
+				<ul v-if="errors && errors.length">
+					<li v-for="error of errors">
+						{{error.message}}
+					</li>
+				</ul>
+				<!---->
+				<h1>De</h1>
 			<b-card-group columns>
 
 <!--
@@ -21,7 +41,7 @@
 					<b-card-text >
 						<strong>Quota:</strong>    <span>{{obj.quota}}</span>    <input type="text"
 						                                                                @input="handleQuota($event.target.value)" v-model="obj.quota">
-						<b-button variant="info" @click="delProperty($event.target.value)">Info</b-button>
+						<b-button  @click="delProperty()">X</b-button>
 
 						<br>
 						<strong>Num:</strong>    <span>{{obj.numerator}}</span>    <input type="text"
@@ -62,15 +82,21 @@
 			<pre> {{ obj }}</pre>
 		</div>
 -->
+
+
 	</b-container>
 
 </template>
 
 <script>
+	import axios from 'axios';
+
 	export default {
 		name: 'PhoneNumberLine',
 		data() {
 			return {
+				posts: [],
+				errors: [],
 				objects: [
 					{id: 1, quota: 100, numerator: 1, denominator: 3},
 					{id: 2, quota: 120, numerator: 2, denominator: 5},
@@ -81,12 +107,13 @@
 				]
 			}
 		},
+
 		methods: {
 			effProp(index) {
 				this.$delete(this.objects, index)
 			},
-			delProperty (){
-			console.log('Merci')
+			delProperty() {
+				console.log('Merci')
 			},
 			handleQuota(value) {
 				this.inputQuota = value;
@@ -98,7 +125,7 @@
 				this.inputDenominator = value;
 			},
 
-			refreshValue: function(element) {
+			refreshValue: function (element) {
 				this.objects.forEach((e, i) => {
 					if (e.id == element.id) {
 						this.objects[i].quota = this.inputQuota;
@@ -107,7 +134,37 @@
 					}
 				});
 			}
+		},
+// Fetches posts when the component is created.
+		created() {
+			axios.get(`http://jsonplaceholder.typicode.com/posts`)
+				.then(response => {
+					// JSON responses are automatically parsed.
+					this.posts = response.data
+				})
+				.catch(e => {
+					this.errors.push(e)
+				})
+			// async / await version (created() becomes async created())
+			//
+			// try {
+			//   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+			//   this.posts = response.data
+			// } catch (e) {
+			//   this.errors.push(e)
+			// }
+		},
+
+/*
+		mounted: function () {
+			this.fetchPosts()
+		},
+		mounted () {
+			axios
+				.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+				.then(response => (this.info = response))
 		}
+*/
 	}
 
 </script>
